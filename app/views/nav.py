@@ -30,7 +30,19 @@ def login():
     from ..model import LoginForm
     form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
+        email = form.email.data
         password = form.password.data
-        print u"服务器收到数据： %s,%s" % (username, password)
+        print u"服务器收到数据： %s,%s" % (email, password)
     return render_template("login.html", form=form)
+
+
+@main.route("/register", methods=["POST", "GET"])
+def register():
+    from ..model import RegisterForm
+    form = RegisterForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        username = form.username.data
+        print u"服务器收到数据： %s,%s,%s" % (email, username, password)
+    return render_template("register.html", form=form)
