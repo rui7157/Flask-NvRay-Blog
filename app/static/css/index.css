@@ -1,0 +1,128 @@
+/*--------基本元素*/
+* {
+    margin: 0px;
+    padding: opx;
+}
+
+a {
+    font-size: 14px;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #000;
+}
+
+body {
+    background-color: #F9F9F9;
+}
+
+input {
+    width: 200px;
+    padding: 6px 9px;
+}
+
+/*-------------*/
+div.menu {
+    padding: 10px;
+    text-align: center;
+
+}
+
+div.clear {
+    clear: both;
+}
+
+.error {
+    color: red;
+}
+
+.correct {
+    color: green;
+}
+
+.form {
+    width: 720px;
+    margin: 10px auto;
+}
+
+.field {
+    width: 300px;
+    margin: 30px auto;
+    white-space: nowrap;
+}
+
+.submit {
+    cursor: pointer;
+    line-height: 35px;
+    width: 110px;
+    margin: 30px 0 0 90px;
+    border: 1px solid #FFFFF0;
+    background-color: #31C552;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #FFFFF0;
+}
+
+div.loginbtn {
+    float: right;
+    width: 200px;
+}
+
+div.loginbtn a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin: 0 auto;
+    display: inline-box;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+}
+
+div.li {
+    float: left;
+
+}
+
+div.li a {
+    padding-left: 100px;
+    padding-right: 100px;
+    display: inline-block;
+}
+
+.foot-box {
+    padding: 20px;
+}
+
+/*base模板样式*/
+.navbar {
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    border-bottom: 1px solid #ccc;
+    background-color: whitesmoke;
+}
+
+.content {
+    border-top: 1px solid #ddd;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+}
+
+.foot {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    width: 100%;
+    background-color: whitesmoke;
+    border-top: 1px solid #ccc;
+}
+
+
+

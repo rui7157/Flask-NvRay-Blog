@@ -1,0 +1,20 @@
+{% macro field_errors(form,field) %}
+{% if form.errors.has_key(field.name) %}
+<span class="error">{{form.errors[field.name][0]}}</span>
+{% endif %}
+{%- endmacro %}
+
+{% macro form_autogenerate(form) %}
+{{form.hidden_tag()}}
+{% for field in form %}
+{% if field.type == "SubmitField" %}
+<div class="field">
+    <button class="submit" id="submit-button">{{field.label.text}}</button>
+</div>
+{% elif field.name == "csrf_token" %}
+<div style="display: none"></div>
+{% else %}
+<div class="field"><p><span>{{field.label.text|safe}}</span>{{field()|safe}}{{field_errors(form,field)}}</p></div>
+{% endif %}
+{% endfor %}
+{% endmacro %}

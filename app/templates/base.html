@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+    <title>{% block title %} {% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css" src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></style>
+    <link href="../static/css/index.css" rel="stylesheet" type="text/css">
+    {% endblock head %}
+</head>
+<body>
+{% block body %}
+<div class="navbar">{% block navbar %} {% endblock navbar%}</div>
+<div style="height: 51px;"></div>
+<div class="content">{% block content %} {% endblock content%}</div>
+<div class="foot">{% block foot %} {% endblock foot %}</div>
+{% endblock body %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}NvRay's Blog{% endblock title %}
+{% block head %}{{super()}}{% endblock head %}
+{% block navbar %}
+<div id="menu" class="menu">
+    <div id="li" class="li">
+        <ul>
+            <li><a href="/">主页</a></li>
+            <li><a href="/blog">博客</a></li>
+            <li><a href="/aboutme">个人介绍</a></li>
+        </ul>
+    </div>
+
+    <div id="loginbtn" class="loginbtn">
+        <ul>
+            <li><a href="/login">登陆</a></li>
+            <li><a href="">注册</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+
+{% endblock navbar %}
+
+
+{% block foot %}
+<div class="foot-box">
+    <p>© 2016 Flask | Powered by NvRay</p>
+</div>
+{% endblock foot %}
+
+
