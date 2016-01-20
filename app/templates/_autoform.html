@@ -6,6 +6,7 @@
 
 {% macro form_autogenerate(form) %}
 {{form.hidden_tag()}}
+<p>{{form.errors.label}}</p>
 {% for field in form %}
 {% if field.type == "SubmitField" %}
 <div class="field">

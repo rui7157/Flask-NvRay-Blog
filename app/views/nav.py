@@ -1,5 +1,5 @@
 # coding:utf-8
-from flask import render_template
+from flask import render_template, redirect, session, url_for
 
 from . import main
 
@@ -27,22 +27,24 @@ def test():
 
 @main.route("/login", methods=["POST", "GET"])
 def login():
-    from ..model import LoginForm
+    from .forms import LoginForm
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-        print u"服务器收到数据： %s,%s" % (email, password)
+        session["email"] = form.email.data
+        session["password"] = form.password.data
+        print u"服务器收到数据： %s,%s" % (session.get("email"), session.get("password"))
+        return redirect(url_for(".login"))
     return render_template("login.html", form=form)
 
 
 @main.route("/register", methods=["POST", "GET"])
 def register():
-    from ..model import RegisterForm
+    from .forms import RegisterForm
     form = RegisterForm()
     if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-        username = form.username.data
-        print u"服务器收到数据： %s,%s,%s" % (email, username, password)
+        session["email"] = form.email.data
+        password["password"] = form.password.data
+        username["username"] = form.username.data
+        print u"服务器收到数据： %s,%s,%s" % (session.get("email"), session.get("username"), session.get("password"))
+        return redirect(url_for(".register"))
     return render_template("register.html", form=form)
