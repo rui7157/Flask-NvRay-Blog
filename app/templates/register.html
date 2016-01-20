@@ -1,0 +1,10 @@
+{% extends "menubase.html" %}
+{% import "_autoform.html" as autoform%}
+{% block content %}
+<div style="height: 100px;"></div>
+<div id="registerform" class="form">
+    <form action="#" method="post" class="registerform" id="loginform">
+        {{autoform.form_autogenerate(form)}}
+    </form>
+</div>
+{% endblock content %}
