@@ -13,6 +13,37 @@ a:link, a:visited {
     color: #000;
 }
 
+.li > ul {
+    height: 100%;
+}
+
+.li > ul > li {
+    height: 100%;
+    border: 1px solid whitesmoke;
+}
+
+.li > ul > li > a {
+    line-height: 48px;
+    padding: 0px 100px;
+    display: inline-block;
+}
+
+.li > ul > li:hover {
+    background-color: #e7e7e7;
+    cursor: pointer;
+    border-left: 1px solid #F5F5F5;
+    border-right: 1px solid #F5F5F5;
+}
+
+.li > ul > li > a:active {
+    border-style: none;
+
+}
+
+.loginbtn {
+    margin: 10px 0px;
+}
+
 body {
     background-color: #F9F9F9;
 }
@@ -24,7 +55,7 @@ input {
 
 /*-------------*/
 div.menu {
-    padding: 10px;
+    height: 100%;
     text-align: center;
 
 }
@@ -75,7 +106,8 @@ div.loginbtn a {
 }
 
 li {
-    list-style-type: none;
+    list-style-type: none
+
 }
 
 ul {
@@ -87,13 +119,11 @@ ul {
 
 div.li {
     float: left;
-
+    height: 100%;
 }
 
 div.li a {
-    padding-left: 100px;
-    padding-right: 100px;
-    display: inline-block;
+
 }
 
 .foot-box {

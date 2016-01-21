@@ -14,6 +14,7 @@ class Config:
 
 class MainConfig(Config):
     SECRET_KEY = "key769007157"
+    MYSQL_INFO={"host":"localhost","user":"root","password":"password","port":3306,"db":"nvray"}
 
 
 config = {
