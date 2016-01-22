@@ -1,35 +1,56 @@
 # coding:utf-8
 
 import pymysql
-#"host":"localhost","user":"root","password":"password","port":3306,"db":"nvray"
+
+
 class Connect:
+    """
+    说明：
+        exc函数执行SQL语句 example:db.exc("select [Colum] from [table] where xx=xx")
+        create函数创建数据表   example:db.create([tablename])
+        dblog函数保存数据库操作日志 example:db.dblog([path])
 
+    """
 
-    def __init__(self,db_info):
+    def __init__(self):
+        self.dblog=""
+
+    def init_app(self,app):
         try:
-            self.conn=pymysql.connect(host=db_info["host"],user=db_info["user"],passwd=db_info["password"],port=db_info["port"],db=db_info["db"],)     #connect("127.0.0.1","root","password")
+            self.conn=pymysql.connect(host=app.config["MYSQL_HOST"],user=app.config["MYSQL_USER"],passwd=app.config["MYSQL_PASSWORD"],port=app.config["MYSQL_PORT"],db=app.config["MYSQL_DB"],)     #connect("127.0.0.1","root","password")
         except Exception,e:
-            raise TypeError(u"sql connect fail:%s" %e)
+            raise ValueError(u"sql connect fail:%s" %e)
         self.cur=self.conn.cursor()
 
     def exc(self,comm):
-        self.dblog=""
+        if not self.conn:
+            raise RuntimeError("Failed to create SQL connect! [init_app(app)]")
         from time import strftime,localtime,time
-        if self.cur.execute(comm):
-            self.dblog+="执行成功　%s:%s" %(strftime('%Y-%m-%d %H:%M:%S',localtime(time())),comm)
-        else:
-            self.dblog+="执行失败　%s:%s" %(strftime('%Y-%m-%d %H:%M:%S',localtime(time())),comm)
-        print self.dblog
-        return self.dblog
+        try:
+            result=self.cur.execute("{};".format(comm))
+            self.dblog+="执行成功　%s:%s\n" %(strftime('%Y-%m-%d %H:%M:%S',localtime(time())),comm)
+        except Exception,e:
+            result=False
+            self.dblog+="执行失败　%s:%s:%s\n" %(strftime('%Y-%m-%d %H:%M:%S',localtime(time())),comm,e)
+        finally:
+            print self.dblog
+            return result
+
+
 
     def create_db(self,tablename):
         if self.exc("select * from %s;" %tablename):
             print u"表存在"
         else:
-            self.exc("create table %s(id int ,email char(20),username char(30),password char(10));" %tablename)
+            self.exc("create table %s(id int ,email char(20),username char(30),password char(10))" %tablename)
+            self.dblog=""
 
     def __call__(self, *args, **kwargs):
         pass
+
+    def dblog(self,path):
+        with open(path,"rw+") as logfile:
+            logfile.write(self.dblog)
 
 
 

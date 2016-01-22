@@ -1,8 +1,7 @@
 # coding:utf-8
 from flask import render_template, redirect, session, url_for
-
+from .. import db
 from . import main
-
 
 @main.route("/")
 def index():
@@ -43,8 +42,10 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         session["email"] = form.email.data
-        password["password"] = form.password.data
-        username["username"] = form.username.data
+        session["password"] = form.password.data
+        session["username"] = form.username.data
         print u"服务器收到数据： %s,%s,%s" % (session.get("email"), session.get("username"), session.get("password"))
+        db.exc("INSERT INTO users(id,email,password,username ) VALUES(1,'{email}','{password}','{username}')".format(email=session.get("email"),password=session.get("password"),username=session.get("username")))
+
         return redirect(url_for(".register"))
     return render_template("register.html", form=form)
