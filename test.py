@@ -1,14 +1,14 @@
-#!conding:u8
-from config import config
-obj=config["MainConfig"]
+#!coding:u8
+class cls(object):
+    co=0
+    def __init__(self):
+        print "obj co=%d" %(self.co+1)
+        print "cls co=%d" %(cls.co+1)
+        print self.__class__
 
-class dict_(dict):
-    def add(self,obj):
-        for key in dir(obj):
-            self[key]=getattr(obj,str(key))
 
-
-configfile=dict_()
-print isinstance(configfile,(dict_,dict))
-configfile.add(obj)
-print configfile
+def ad(obj):
+    return obj.co
+t=cls()
+t2=cls()
+print t.co
