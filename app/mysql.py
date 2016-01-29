@@ -2,7 +2,7 @@
 import pymysql
 from time import strftime,localtime,time
 import threading
-
+import functools
 
 
 # class db(object):
@@ -48,11 +48,16 @@ class create_engine(object):
 
     from pymysql import connect
     def __init__(self,app):
+        global engine
         if engine is not None:
             raise DBError("Engine is already inited")
         db_info=dict(host=app.config["MYSQL_HOST"],user=app.config["MYSQL_USER"],passwd=app.config["MYSQL_PASSWORD"],port=app.config["MYSQL_PORT"],db=app.config["MYSQL_DB"],)
 
         engine=_Engine(lambda:connect(db_info))
+
+def db():
+    return create_engine
+
 
 class Connection(object):
     """
@@ -113,11 +118,14 @@ _db_=Db()
 
 
 class _Dbconnect(object):
+    """
+    with 控制打开和关闭连接
+    """
     global _db_
     def __enter__(self):
         self.should_close=False
-        if not _db_().is_init():
-            _db_().init()
+        if not _db_.is_init():
+            _db_.init()
             self.should_close=True
         return _db_
 
@@ -133,15 +141,58 @@ def current_time():
     return strftime('%Y-%m-%d %H:%M:%S',localtime(time()))
 
 def with_connect(func):
-
-    @functools.warps(func)
+    """
+    自行检查_db_全局变量的打开和关闭,操作完毕自动关闭
+    :param func: 数据库操作select insert update...
+    """
+    @functools.wraps(func)
     def _warpps(*args,**kw):
-        with with_connect():
+        with _Dbconnect():
             return func(*args,**kw)
     return _warpps
+
+def _select(sql,is_first=True,*args):
+    global _db_
+    cursor=None
+    sql.replace("#","%s")
+    try:
+        cursor=_db_.connection.cursor()
+        cursor.execute(sql,args)
+        print cursor
+
+    except Exception,e:
+        print u"%s:数据库语句有误" %current_time() #可记录日志
+
+
+    finally:
+        if cursor:
+            cursor.close()
+
+
+
+
+def select_one():
+    """
+    检索第一个结果
+    :return:
+    """
+    pass
+
+def select():
+    """
+    多个结果
+    :return:
+    """
+    pass
+
+def update():
+    pass
+
+def insert():
+    pass
 
 
 
 
 if __name__=="__main__":
-    pass
+    create_engine(app)
