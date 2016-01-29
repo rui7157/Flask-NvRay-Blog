@@ -14,7 +14,7 @@ class Config:
 
 class MainConfig(Config):
     SECRET_KEY = "key769007157"
-    MYSQL_HOST="localhost"
+    MYSQL_HOST="127.0.0.1"
     MYSQL_USER="root"
     MYSQL_PASSWORD="password"
     MYSQL_PORT=3306
