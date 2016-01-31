@@ -4,6 +4,11 @@ from time import strftime,localtime,time
 import threading
 import functools
 
+"""
+代码参考廖雪峰教程：
+https://github.com/michaelliao/awesome-python-webapp/blob/day-03/www/transwarp/db_.py
+
+"""
 
 
 class Dict(dict):        
@@ -207,8 +212,21 @@ def select(sql,*args):
     print _select(sql,False,*args)
 
 @with_connect
-def update():
-    pass
+def _update(sql, *args):
+    global _db_
+    cursor = None
+    sql = sql.replace('?', '%s')
+    try:
+        cursor = _db_.cursor()
+        cursor.execute(sql, args)
+        r = cursor.rowcount
+        if _db_.transactions==0:
+            # no transaction enviroment:
+            _db_.commit()
+        return r
+    finally:
+        if cursor:
+            cursor.close()
 
 @with_connect
 def insert(table,**kw):
