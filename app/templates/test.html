@@ -1,10 +1,22 @@
-<html>
+{% extends "menubase.html" %}
+{% import "_autoform.html" as autoform%}
+{% block content %}
+<h1>用户名信息：</h1>
+<div style="width: 100%;text-align: center;">
+<table cellpadding="0" cellspacing="1px" style="border: 1px solid #000000;text-align: center;display:inline-table" >
+    <tr>
+        <td>tablename</td>
+        <td>uid</td>
+        <td>uname</td>
+        <td>uemail</td>
+        <td>upassword_hash</td>
+    </tr>
+{% for user in user_info %}
 
-<head>
-    <title>test</title>
-</head>
-<body>
-<h1>test程序</h1>
+   <tr style="border: 1px solid #000000;">{{user|safe}}</tr>
 
-</body>
-</html>
+
+{% endfor %}
+</table>
+</div>
+{% endblock content %}

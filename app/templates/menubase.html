@@ -19,7 +19,13 @@
     </div>
     <div class="clear"></div>
 </div>
-
+<div id="flash" class="flash">
+    {% if get_flashed_messages() %}
+        {% for msg in get_flashed_messages() %}
+                <a>{{msg}}</a>
+        {% endfor %}
+    {% endif %}
+</div>
 {% endblock navbar %}
 
 

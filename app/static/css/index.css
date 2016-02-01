@@ -52,6 +52,15 @@ input {
     padding: 6px 9px;
 }
 
+/*table {*/
+    /*border: 1px solid #000000;*/
+    /*padding:0;*/
+    /*background-color: #F5F5F5;*/
+/*}*/
+table td{
+    background-color:#e7e7e7;
+}
+
 /*-------------*/
 div.menu {
     height: 100%;

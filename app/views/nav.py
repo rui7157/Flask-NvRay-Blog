@@ -1,6 +1,6 @@
 # coding:utf-8
 from re import sub
-from flask import render_template, redirect, session, url_for
+from flask import render_template, redirect, session, url_for,flash
 from . import main
 from hash import Hash
 from ..model import *
@@ -24,7 +24,10 @@ def aboutme():
 
 @main.route("/test")
 def test():
-    return render_template("test.html")
+    user_info=User.query.order_by(User.uid)
+    # user_info=user_info.items
+
+    return render_template("test.html",user_info=user_info)
 
 
 @main.route("/login", methods=["POST", "GET"])
@@ -36,11 +39,15 @@ def login():
         session["email"] = sub(r"[-|;|,|/|\(|\)|\[|\]|}|{|%|*|!|=|']", "", form.email.data)  # 过滤email防注入
         session["password"] = form.password.data
         print u"服务器收到数据：" + session.get('email') + session.get('password')
-        querydata = db.exeQuery("select password from users where email='%s'" % (session.get('email')))
-        if querydata is not False and querydata[0][0] == Hash(form.password.data, form.password.data).en():
-            print "登陆成功"
+        user=User.query.filter_by(uemail=session.get('email')).first()
+        if user:
+            if user.upassword_hash==Hash(session.get('password')).en:
+                flash(u"登陆成功！")
+            else:
+                flash(user.upassword_hash+"="+Hash(session.get('password')).en)
+                flash(u"密码错误！")
         else:
-            print "登陆失败"
+            flash(u"该用户不存在！")
         return redirect(url_for(".login"))
     return render_template("login.html", form=form)
 
@@ -52,14 +59,16 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         session["email"] = form.email.data
-        session["password"] = form.password.dat
+        session["password"] = form.password.data
         session["username"] = form.username.data
         print u"服务器收到数据： %s,%s,%s" % (session.get("email"), session.get("username"), session.get("password"))
-        user = User(email=session.get("email"), password=session.get("password"), username=session.get("username"))
+        user = User(uemail=session.get("email"), password=session.get("password"), uname=session.get("username"))
         db.session.add(user)
         try:
             db.session.commit()
+            flash(u"注册成功！")
         except:
+            print "失败！"
             db.session.rollback()
 
         return redirect(url_for(".register"))

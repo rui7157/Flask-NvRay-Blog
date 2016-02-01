@@ -7,13 +7,17 @@ from hashlib import sha1
 
 
 class Hash(object):
-    pwd = sha1()
-
-    def __init__(self, email, password):
+    def __init__(self, password, email=""):
+        self.pwd = sha1()
         self.pwd.update(email)
-        self.username = self.pwd.hexdigest()
+        self.email_hash = self.pwd.hexdigest()
         self.password = password
 
+    @property
     def en(self):
-        self.pwd.update(self.username + self.password)
+        self.pwd.update(self.email_hash + self.password)
         return self.pwd.hexdigest()
+
+    @en.setter
+    def en(self):
+        raise AttributeError("Hash password only read!")
