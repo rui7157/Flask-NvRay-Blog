@@ -12,12 +12,12 @@ class Config:
         print "running Config class"
 class SinaappSae(Config):
     import MySQLdb
-    SECRET_KEY = "key769007157"
+    SECRET_KEY = os.environ.get("SECRET_KEY")
     MYSQL_HOST=os.environ.get('MYSQL_HOST')
     MYSQL_USER=os.environ.get('ACCESSKEY')
     MYSQL_PASSWORD=os.environ.get('SECRETKEY')
     MYSQL_PORT=os.environ.get('MYSQL_PORT')
-    MYSQL_DB = 'app_' + os.environ.get('APPNAME')
+    MYSQL_DB = 'app_' + os.environ.get('ACCESS_KEY')
     SQLALCHEMY_DATABASE_URI="mysql+MySQLdb://%s:%s@%s:%s/%s" %(os.environ.get('ACCESSKEY'),os.environ.get('SECRETKEY'),os.environ.get('MYSQL_HOST'),int(os.environ.get('SAE_MYSQL_PORT')),'app_' + os.environ.get('APPNAME'))
 
 
