@@ -38,5 +38,6 @@ class MainConfig(Config):
 
 
 config = {
-    'MainConfig': MainConfig
+    'MainConfig': MainConfig,
+    'SinaappSae': SinaappSae
 }
