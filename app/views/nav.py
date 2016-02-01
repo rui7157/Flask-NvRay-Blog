@@ -41,10 +41,9 @@ def login():
         print u"服务器收到数据：" + session.get('email') + session.get('password')
         user=User.query.filter_by(uemail=session.get('email')).first()
         if user:
-            if user.upassword_hash==Hash(session.get('password')).en:
+            if user.verify_password(session.get("email")+session.get("password")):
                 flash(u"登陆成功！")
             else:
-                flash(user.upassword_hash+"="+Hash(session.get('password')).en)
                 flash(u"密码错误！")
         else:
             flash(u"该用户不存在！")
@@ -62,7 +61,7 @@ def register():
         session["password"] = form.password.data
         session["username"] = form.username.data
         print u"服务器收到数据： %s,%s,%s" % (session.get("email"), session.get("username"), session.get("password"))
-        user = User(uemail=session.get("email"), password=session.get("password"), uname=session.get("username"))
+        user = User(uemail=session.get("email"), password=User(uemail=session.get("email")+session.get("password"), uname=session.get("username"))
         db.session.add(user)
         try:
             db.session.commit()
