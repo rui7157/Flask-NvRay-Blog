@@ -16,9 +16,11 @@ class SinaappSae(Config):
     MYSQL_HOST=os.environ.get('MYSQL_HOST')
     MYSQL_USER=os.environ.get('ACCESSKEY')
     MYSQL_PASSWORD=os.environ.get('SECRETKEY')
-    MYSQL_PORT=int(os.environ.get('MYSQL_PORT'))
+    MYSQL_PORT=os.environ.get('MYSQL_PORT')
     MYSQL_DB = 'app_' + os.environ.get('APPNAME')
-    SQLALCHEMY_DATABASE_URI="mysql+MySQLdb://%s:%s@%s/%s" %(os.environ.get('ACCESSKEY'),os.environ.get('SECRETKEY'),os.environ.get('MYSQL_HOST'),'app_' + os.environ.get('APPNAME'))
+    SQLALCHEMY_DATABASE_URI="mysql+MySQLdb://%s:%s@%s:%s/%s" %(os.environ.get('ACCESSKEY'),os.environ.get('SECRETKEY'),os.environ.get('MYSQL_HOST'),int(os.environ.get('SAE_MYSQL_PORT')),'app_' + os.environ.get('APPNAME'))
+
+
 
 class MainConfig(Config):
     SECRET_KEY = "key769007157"
