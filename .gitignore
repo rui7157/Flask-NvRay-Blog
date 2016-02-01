@@ -68,3 +68,4 @@ Include/
 .idea/
 *.pyc
 *~
+vendor/
