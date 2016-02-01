@@ -1,3 +1,4 @@
+#coding:utf-8
 import sae
 #新浪sinaapp，sae链接文件
 from myapp import app
