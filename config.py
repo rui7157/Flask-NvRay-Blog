@@ -23,7 +23,7 @@ class SinaappSae(Config):
     MYSQL_PASSWORD=os.environ.get('SECRETKEY')
     MYSQL_PORT=os.environ.get('MYSQL_PORT')
     MYSQL_DB = 'app_' + os.environ.get('ACCESS_KEY')
-    SQLALCHEMY_DATABASE_URI="mysql+MySQLdb://%s:%s@%s:%s/%s" %(os.environ.get('SAE_MYSQL_USER'),os.environ.get('SAE_MYSQL_PASS'),os.environ.get('SAE_MYSQL_HOST_M'),int(os.environ.get('SAE_MYSQL_PORT')),'app_' + os.environ.get('ACCESS_KEY'))
+    SQLALCHEMY_DATABASE_URI="mysql+MySQLdb://%s:%s@%s:%s/%s" %(os.environ.get('SAE_MYSQL_USER'),os.environ.get('SAE_MYSQL_PASS'),os.environ.get('SAE_MYSQL_HOST_M'),os.environ.get('SAE_MYSQL_PORT'),'app_' + os.environ.get('ACCESS_KEY'))
 
 
 
