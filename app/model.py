@@ -2,6 +2,11 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from time import strftime, localtime, time
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask.ext.login import UserMixin
+from . import login_manager
+
+
+
 
 db = SQLAlchemy()
 
@@ -13,7 +18,15 @@ def current_time():
     return strftime('%Y-%m-%d %H:%M:%S', localtime(time()))
 
 
-class User(db.Model):
+class User(db.Model,UserMixin):
+    """
+    继承父类UserMixin方法：
+    is_authenticated方法是一个误导性的名字的方法，通常这个方法应该返回True，除非对象代表一个由于某种原因没有被认证的用户。
+    is_active方法应该为用户返回True除非用户不是激活的，例如，他们已经被禁了。
+    is_anonymous方法应该为那些不被获准登录的用户返回True。
+    get_id方法为用户返回唯一的unicode标识符。我们用数据库层生成唯一的id。
+
+    """
     __tablename__ = "users"
     uid = db.Column(db.SmallInteger, primary_key=True)
     uemail = db.Column(db.String(60))
@@ -33,22 +46,15 @@ class User(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.upassword_hash, password)
 
-    def is_authenticated(self):
-        """如果用户已经登录,必须返回 True ,否则返回 False"""
-        pass
-    def is_active(self):
-        """如果允许用户登录,必须返回 True ,否则返回 False 。如果要禁用账户,可以返回 False"""
-        pass
-    def is_anonymous(self):
-        """对普通用户必须返回 False"""
-        pass
     def get_id(self):
-        """必须返回用户的唯一标识符,使用 Unicode 编码字符串"""
-        pass
+        """
+        重写父类UserMixin方法get_id
+        """
+        return unicode(self.uid)
 
 
     def __repr__(self):
-        return "<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>" % (
+        return u"<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>" % (
             self.__tablename__, self.uid, self.uname, self.uemail, self.upassword_hash)
 
 
@@ -61,3 +67,9 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime(), index=True, default=current_time)
 
     users = db.relationship("User", backref="user", lazy="joined")
+
+
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(int(userid))

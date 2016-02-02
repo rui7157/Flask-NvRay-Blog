@@ -9,7 +9,7 @@ manager = Manager(app)
 
 
 @manager.command
-def mysqlshell():
+def run():
     app.run("127.0.0.1",8080,True)
 
 if __name__ == "__main__":
