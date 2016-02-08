@@ -1,12 +1,14 @@
 /*--------基本元素*/
 * {
-    margin: 0px;
-    padding: opx;
+    margin: 0;
+    padding: 0;
 }
 
 a:link, a:visited {
     text-decoration: none;
     color: #000;
+
+
 }
 
 .li > ul {
@@ -17,7 +19,7 @@ a:link, a:visited {
     border-top:3px solid transparent;
     font-size: 14px;
     line-height: 48px;
-    padding: 0px 100px;
+    padding: 0 100px;
     display: inline-block;
 }
 .li > ul > li > a:hover {
@@ -54,7 +56,7 @@ a:link, a:visited {
 .post {
     border-style: solid;
     border-radius: 6px;
-    border-width: 1px;
+    border-width: 2px;
     border-color: #e7e7e7;
 }
 
@@ -66,11 +68,27 @@ a:link, a:visited {
 
 .post h3 a {
     padding: 5px 30px;
-    border-left: solid 4px #177199;
+    border-left: solid 4px #64AFDD;
     font-weight: 700;
-    color: #177199;
-    opacity: .6;
+    color: #64AFDD;
     letter-spacing: 2px;
+
+}
+
+.post h3 a:hover{
+    color:#177199;
+
+}
+
+.post p a{
+    transition: all .3s ease;
+    -moz-transition: all .3s ease; /* Firefox 4 */
+    -webkit-transition: all .3s ease; /* Safari 和 Chrome */
+    -o-transition: all .3s ease; /* Opera */
+}
+
+.post p a:hover{
+    color:#64AFDD;
 
 }
 .timestamp{
@@ -78,7 +96,7 @@ a:link, a:visited {
 
     border-top:solid 1px #e7e7e7;
 }
-.timestamp a{
+.timestamp p{
     color: #999;
     font-size: small;
 }
@@ -98,10 +116,12 @@ a:link, a:visited {
 
 }
 body {
+    color:#707070;
     background: url("../pic/bg.jpg") no-repeat 50% fixed;
 }
 p{
-    font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    /*font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;*/
+    font: 14px/1.5 "PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft YaHei",sans-serif;
 }
 input {
     padding: 6px 9px;
