@@ -2,9 +2,11 @@
 {% import "_autoform.html" as autoform%}
 {% block content %}
 
-
+<div>
+    <h3>欢迎您！NvRay</h3>
+</div>
 <div style="height: 100px;"></div>
-<div id="loginform" class="form">
+<div id="form" class="form">
     <form action="#" method="post" class="loginform" id="loginform">
         {{autoform.form_autogenerate(form)}}
     </form>

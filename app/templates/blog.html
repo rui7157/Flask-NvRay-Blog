@@ -1,5 +1,39 @@
 {% extends "menubase.html" %}
+{% import "_autoform.html" as autoform%}
 {% block content %}
-<div style="width:720px;padding:20px;font-size:2em;text-align:center;margin:100px auto;border-top:1px solid #999;"><p>
-    这是blog</p></div>
+<div style="height:100px;"></div>
+<div><h5><a href="/blog/edit">发表文章</a> </h5></div>
+<hr/>
+
+{% for post in posts %}
+<div class="post" id="post" style="margin: 10px; padding: 20px;">
+<h3><a href="#">{{post.title}}</a></h3>
+<br/>
+<div class="timestamp"><p><a href="#">{{post.timestamp}}</a></p></div>
+    <br/>
+<p>{{post.body|safe}}</p>
+    <a class="post-more" href="#"><span class="post-more-link">阅读全文 »</span></a>
+    </div>
+
+    <br>
+{% endfor %}
+
+
+<div class="pagination" id="pagination">
+    <ul>
+
+        {% if pagination.has_prev %}
+        <li><a href="{{url_for('view.blog',page=pagination.page-1 )}}">上一页</a></li>
+        {% endif %}
+
+        {% for p in pagination.iter_pages() %}
+        <li><a href="{{url_for('view.blog',page=p,l=56)}}">{{p}}</a></li>
+        {% endfor %}
+
+        {% if pagination.has_next %}
+       <li> <a href="{{url_for('view.blog',page=pagination.page+1 )}}">下一页</a></li>
+        {% endif %}
+
+    </ul>
+</div>
 {% endblock content %}

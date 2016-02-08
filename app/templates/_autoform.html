@@ -1,21 +1,35 @@
 {% macro field_errors(form,field) %}
+{# 错误显示 #}
 {% if form.errors.has_key(field.name) %}
 <span class="error">{{form.errors[field.name][0]}}</span>
 {% endif %}
 {%- endmacro %}
 
-{% macro form_autogenerate(form) %}
-{{form.hidden_tag()}}
-<p>{{form.errors.label}}</p>
-{% for field in form %}
+
+
+{% macro field_generate(form,field) %}
+{# 单个field生成  #}
 {% if field.type == "SubmitField" %}
 <div class="field">
     <button class="submit" id="submit-button">{{field.label.text}}</button>
 </div>
 {% elif field.name == "csrf_token" %}
 <div style="display: none"></div>
+{% elif field.type=="BooleanField" %}
+
+<div class="field"> <p>{{field()|safe}} {{field.label.text|safe}}</p></div>
+
 {% else %}
 <div class="field"><p><span>{{field.label.text|safe}}</span>{{field()|safe}}{{field_errors(form,field)}}</p></div>
 {% endif %}
+
+{% endmacro %}
+
+
+{% macro form_autogenerate(form) %}
+{{form.hidden_tag()}}
+<p>{{form.errors.label}}</p>
+{% for field in form %}
+{{ field_generate(form,field) }}
 {% endfor %}
 {% endmacro %}

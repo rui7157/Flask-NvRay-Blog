@@ -1,17 +1,17 @@
-class User(object):
-    _password = "76900"
+import functools
+class ceshi(object):
+    def zs(self,func):
+        @functools.wraps(func)
+        def jia(*kw,**args):
+            print dir(func)
 
-    @property
-    def password(self):
-        print "zhixing"
-        raise AttributeError("password not read!")
+            return func(*kw,**args)
+        return jia
+c=ceshi()
+@c.zs
+class g(object):
+    def __call__(self, k):
+        print k
 
-    @password.setter
-    def password(self, password):
-        print "setter"
-        self._password = password
 
-User(password="123")
-
-print User.password
-print User._password
+g()

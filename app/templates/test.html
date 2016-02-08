@@ -18,5 +18,8 @@
 
 {% endfor %}
 </table>
+    {% for user in user_info %}
+    <h3>{{user.uname}}</h3>
+    {% endfor %}
 </div>
 {% endblock content %}

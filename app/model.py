@@ -60,7 +60,7 @@ class User(db.Model,UserMixin):
 
 class Post(db.Model):
     __tablename__ = "posts"
-    uid = db.Column(db.SmallInteger, primary_key=True)
+    id = db.Column(db.SmallInteger, primary_key=True)
     title = db.Column(db.String(100))
     body = db.Column(db.Text)
     author_id = db.Column(db.SmallInteger, db.ForeignKey("users.uid"))

@@ -1,0 +1,15 @@
+{% extends "menubase.html" %}
+{% import "_autoform.html" as autoform%}
+{% block content %}
+<div style="height:100px;"></div>
+<hr/>
+<div id="postform" class="postform">
+    <form action="#" method="post" class="editpostform" id="editpostform">
+        {{form.hidden_tag()}}
+        {{autoform.field_generate(form,form.title)}}
+        <textarea name="content" id="content" class="ckeditor" ></textarea>
+        {{autoform.field_generate(form,form.submit)}}
+    </form>
+</div>
+
+{% endblock content %}

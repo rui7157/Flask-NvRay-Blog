@@ -4,10 +4,6 @@
     padding: opx;
 }
 
-a {
-    font-size: 14px;
-}
-
 a:link, a:visited {
     text-decoration: none;
     color: #000;
@@ -18,18 +14,25 @@ a:link, a:visited {
 }
 
 .li > ul > li > a {
+    border-top:3px solid transparent;
+    font-size: 14px;
     line-height: 48px;
     padding: 0px 100px;
     display: inline-block;
 }
-
-.li > ul > li:hover {
+.li > ul > li > a:hover {
     background-color: #e7e7e7;
-    cursor: pointer;
-    -webkit-box-shadow: 0 0 10px rgba(217, 217, 217, .8);
-    -moz-box-shadow: 0 0 10px rgba(217, 217, 217, .8);
-    box-shadow: 0 0 10px rgba(217, 217, 217, .8);
+    border-top: 3px solid #999999;
 }
+
+
+/*.li > ul > li:hover {*/
+    /*background-color: #e7e7e7;*/
+    /*!*border-top: 3px solid #999999;*!*/
+    /*cursor: pointer;*/
+/*}*/
+
+
 
 .submit:hover {
     -webkit-box-shadow: 0 0 10px rgba(49, 197, 82, .5);
@@ -48,17 +51,59 @@ a:link, a:visited {
 
 }
 
-.loginbtn {
-    margin: 10px 0px;
+.post {
+    border-style: solid;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: #e7e7e7;
 }
 
+.post:hover {
+    background: rgba(220, 255, 255, 0.1) !important;
+    box-shadow: 2px 2px 4px #888;
+
+}
+
+.post h3 a {
+    padding: 5px 30px;
+    border-left: solid 4px #177199;
+    font-weight: 700;
+    color: #177199;
+    opacity: .6;
+    letter-spacing: 2px;
+
+}
+.timestamp{
+    padding: 10px;
+
+    border-top:solid 1px #e7e7e7;
+}
+.timestamp a{
+    color: #999;
+    font-size: small;
+}
+.post-more{
+    margin-top: 40px;
+    text-align: center;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+
+}
+.post-more-link{
+    color:#999999;
+    border-radius: 4px;
+    border: 1px solid #999999;
+    padding: 4px 15px;
+
+}
 body {
-    background-color: #F9F9F9;
-    background-image: url("../pic/bg.jpg");
+    background: url("../pic/bg.jpg") no-repeat 50% fixed;
 }
-
+p{
+    font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+}
 input {
-    width: 200px;
     padding: 6px 9px;
 }
 
@@ -70,6 +115,7 @@ table td {
 div.menu {
     height: 100%;
     text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
 
 }
 
@@ -100,7 +146,7 @@ div.clear {
     cursor: pointer;
     line-height: 35px;
     width: 110px;
-    margin: 30px 0 0 90px;
+    margin: 0 0 0 90px;
     border: 0px solid #FFFFF0;
     background-color: #31C552;
     border-radius: 4px;
@@ -108,7 +154,20 @@ div.clear {
     color: #FFFFF0;
 }
 
+.postform {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.pagination li a {
+    padding: 3px 7px;
+    border: solid 1px #d7e2ee;
+    margin: 0 4px 0 0;
+
+}
+
 div.loginbtn {
+    margin: 10px 0px;
     float: right;
     width: 200px;
 }
@@ -153,9 +212,11 @@ div.li a {
 }
 
 .content {
-    border-top: 1px solid #ddd;
-    width: 100%;
-    border-bottom: 1px solid #ddd;
+    background-color: #FFF;
+    width: 960px;
+    margin: 0 auto;
+    box-shadow: 2px 0 5px  #BBB;
+
 }
 
 .foot {

@@ -13,7 +13,12 @@ def index():
 # -------各大基本视图
 @main.route("/blog")
 def blog():
-    return render_template("blog.html")
+    page = request.args.get('page', 1, type=int)
+    print u"页码 %s" %page
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page, per_page=3, error_out=False)
+    posts = pagination.items
+    return render_template("blog.html",posts=posts,pagination=pagination)
 
 
 @main.route("/aboutme")
@@ -42,7 +47,7 @@ def login():
         if user:
             if user.verify_password(session.get("email")+session.get("password")):
                 flash(u"登陆成功！")
-                login_user(user)
+                login_user(user,form.remember_me.data)
             else:
                 flash(u"密码错误！")
         else:
@@ -66,6 +71,7 @@ def register():
         try:
             db.session.commit()
             flash(u"注册成功！")
+            login_user(user)
         except:
             flash(u"注册失败！")
             db.session.rollback()
@@ -77,13 +83,38 @@ def register():
 @login_required
 def logout():
     logout_user()
-    flash("成功退出登陆！")
+    flash(u"成功退出登陆！")
     return redirect(url_for(".index"))
+#-------------功能视图---------------
+@main.route("/blog/edit",methods=["POST","GET"])
+@login_required
+def editblog():
+    from .forms import EditPostForm
+    form=EditPostForm()
 
+    if form.validate_on_submit():
+        print "test"
+        session["title"]=form.title.data
+        session["content"]=form.content.data
+        print u"服务器收到数据：%s,%s,%s" %(session.get("title"),session.get("content"),current_user.uid)
+        post=Post(title=session.get("title"),body=session.get("content"),author_id=current_user.uid)
+        db.session.add(post)
+        try:
+            db.session.commit()
+            flash(u"发表成功！")
+        except:
+            flash(u"发表失败！")
+            print u"失败"
+            db.session.rollback()
+        return redirect(url_for(".blog"))
+
+    return render_template("editblog.html",form=form)
+
+#-------------错误页面---------------
 @main.app_errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
-# @main.errorhandler(500)
-# def internal_server_error(e):
-#     return render_template('500.html'), 500
+@main.app_errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500

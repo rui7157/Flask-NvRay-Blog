@@ -40,6 +40,7 @@ class MainConfig(Config):
     MYSQL_PASSWORD = "password"
     MYSQL_PORT = 3306
     MYSQL_DB = "nvray"
+    SQLALCHEMY_TRACK_MODIFICATIONS=True
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:password@127.0.0.1/nvray"
 
 
