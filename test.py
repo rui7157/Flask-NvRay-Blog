@@ -14,4 +14,4 @@ class User(object):
 User(password="123")
 
 print User.password
-print User._password
+print "test"
