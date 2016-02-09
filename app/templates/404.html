@@ -2,5 +2,7 @@
 {% import "_autoform.html" as autoform%}
 {% block content %}
 <div style="width:720px;padding:20px;font-size:2em;text-align:center;margin:100px auto;border-top:1px solid #999;"><p>
-    404 您访问的页面不存在！</p></div>
+    404 您访问的页面不存
+<p><a href="{{url_for('view.index')}}">返回主页</a> </p></div>
+
 {% endblock content %}

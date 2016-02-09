@@ -68,7 +68,9 @@ class Post(db.Model):
 
     users = db.relationship("User", backref="user", lazy="joined")
 
-
+    @staticmethod
+    def on_changed_body():
+        pass
 
 @login_manager.user_loader
 def load_user(userid):

@@ -2,22 +2,28 @@
 {% import "_autoform.html" as autoform%}
 {% block content %}
 <div style="height:100px;"></div>
-<div><h5><a href="/blog/edit">发表文章</a> </h5></div>
+
+
 <hr/>
 
 {% for post in posts %}
 <div class="post" id="post" style="margin: 10px; padding: 20px;">
-<h3><a href="#">{{post.title}}</a></h3>
+<h3><a href="{{url_for('view.post',id=post.id)}}" target="_blank">{{post.title}}</a></h3>
 <br/>
-<div class="timestamp"><p>{{post.timestamp}}</p></div>
+<div class="post-info"><p><span><i class="icon-calendar"> {{post.timestamp}}</i></span> <span><i class="icon-comment"></i></span></p></div>
+
+{% if current_user.is_active %}
+<div class="edit"><p><span class="post-delete"><a href="{{url_for('view.delete_post',id=post.id)}}"><i class="icon-trash"></i>删除</a></span><span class="post-edit"><a><i class=" icon-edit"></i>编辑</a></span></p></div>
+{% endif %}
+
     <br/>
-<p>{{post.body|safe}}</p>
-    <a class="post-more" href="#"><span class="post-more-link">阅读全文 »</span></a>
+    <p><i class="icon-quote-left"></i>{{post.body[:200]|safe}}……<i class=" icon-quote-right"></i></p>
+    <a class="post-more" href="{{url_for('view.post',id=post.id)}}" target="_blank"><span class="post-more-link">阅读全文 <i class="icon-double-angle-right"></i></span></a>
     </div>
 
-    <br>
-{% endfor %}
+    <br/>
 
+{% endfor %}
 
 <div class="pagination" id="pagination">
     <ul>
@@ -35,5 +41,11 @@
         {% endif %}
 
     </ul>
+</div>
+<div class="fixed-btn">
+    <a class="fixed go-top" href="#"><i class="icon-arrow-up"></i></a>
+       {% if current_user.is_active  %} <a class="fixed edit-post" href="{{url_for('view.editblog')}}"><i class="icon-edit"></i></a>{% endif%}
+
+
 </div>
 {% endblock content %}
