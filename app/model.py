@@ -4,9 +4,7 @@ from time import strftime, localtime, time
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 from . import login_manager
-
-
-
+import bleach
 
 db = SQLAlchemy()
 
@@ -18,7 +16,7 @@ def current_time():
     return strftime('%Y-%m-%d %H:%M:%S', localtime(time()))
 
 
-class User(db.Model,UserMixin):
+class User(db.Model, UserMixin):
     """
     继承父类UserMixin方法：
     is_authenticated方法是一个误导性的名字的方法，通常这个方法应该返回True，除非对象代表一个由于某种原因没有被认证的用户。
@@ -52,7 +50,6 @@ class User(db.Model,UserMixin):
         """
         return unicode(self.uid)
 
-
     def __repr__(self):
         return u"<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>" % (
             self.__tablename__, self.uid, self.uname, self.uemail, self.upassword_hash)
@@ -62,15 +59,22 @@ class Post(db.Model):
     __tablename__ = "posts"
     id = db.Column(db.SmallInteger, primary_key=True)
     title = db.Column(db.String(100))
-    body = db.Column(db.Text)
+    body_html = db.Column(db.Text)
     author_id = db.Column(db.SmallInteger, db.ForeignKey("users.uid"))
     timestamp = db.Column(db.DateTime(), index=True, default=current_time)
-
     users = db.relationship("User", backref="user", lazy="joined")
 
-    @staticmethod
-    def on_changed_body():
-        pass
+    @property
+    def body(self):
+        return bleach.clean(self.body_html, tags=[], strip=True)
+
+    @body.setter
+    def body(self, post_content):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p']
+        self.body_html = bleach.linkify(bleach.clean(post_content,tags=allowed_tags,strip=True))
+
 
 @login_manager.user_loader
 def load_user(userid):

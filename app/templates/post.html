@@ -1,26 +1,6 @@
 {% extends "menubase.html" %}
 {% import "_autoform.html" as autoform%}
 {% block content %}
-<div class="single-post">
-<div style="height:100px;"></div>
-<div class="hr"><hr/></div>
-<div id="blog_post" class="blog-post">
-<h3><a href="#">{{post.title}}</a></h3>
-<br/>
-<div class="timestamp"><p><i class="icon-calendar"></i> {{post.timestamp}}</p></div>
-    <br/>
-
-{% if current_user.is_active %}
-<div class="edit"><p><span class="post-delete"><a href="{{url_for('view.delete_post',id=post.id)}}"><i class="icon-trash"></i>删除</a></span><span class="post-edit"><a><i class=" icon-edit"></i>编辑</a></span></p></div>
-{% endif %}
-
-<p>{{post.body|safe}}</p>
-    </div>
-<div class="hr"><hr/></div>
-
-   <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="{{post.id}}" data-title="{{post.title}}" data-url="{{url_for('view.post',id=post.id)}}"></div>
-<!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"nvray"};
@@ -34,7 +14,36 @@ var duoshuoQuery = {short_name:"nvray"};
 	})();
 	</script>
 <!-- 多说公共JS代码 end -->
-</div>
+<div class="single-post">
+<div style="height:100px;"></div>
+<div class="hr"><hr/></div>
+<div id="blog_post" class="blog-post">
+<h3><a href="#">{{post.title}}</a></h3>
+<br/>
+<div class="timestamp"><p><i class="icon-calendar"></i> {{post.timestamp}}</p></div>
+    <br/>
 
+{% if current_user.is_active %}
+<div class="edit"><p><span class="post-delete"><a href="{{url_for('view.delete_post',id=post.id)}}"><i class="icon-trash"></i>删除</a></span><span class="post-edit"><a><i class=" icon-edit"></i>编辑</a></span></p></div>
+{% endif %}
+
+<p>{{post.body_html|safe}}</p>
+    </div>
+<div class="hr"><hr/></div>
+    <a name="ds" id="ds"></a>
+   <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="{{post.id}}" data-title="{{post.title}}" data-url="{{url_for('view.post',id=post.id)}}"></div>
+<!-- 多说评论框 end -->
+
+
+
+
+</div>
+<div class="fixed-btn">
+    <a class="fixed go-top" href="#"><i class="icon-arrow-up"></i></a>
+       {% if current_user.is_active  %} <a class="fixed edit-post" href="{{url_for('view.editblog')}}"><i class="icon-pencil"></i></a>{% endif%}
+
+
+</div>
 
 {% endblock content %}

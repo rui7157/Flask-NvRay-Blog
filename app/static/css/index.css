@@ -60,13 +60,15 @@ a:link, a:visited {
     padding: 0 3px;
     border-radius: 2px;
     background-color: #43CD80;
+    /*background-color: #A0D569;*/
     color: #FFF;
 }
 
 .post-delete a {
     padding: 0 3px;
     border-radius: 2px;
-    background-color: #DA3E3E;
+    /*background-color: #DA3E3E;*/
+    background-color: #ED5466;
     color: #FFF;
 }
 
@@ -251,7 +253,7 @@ hr {
 }
 
 .single-post {
-    padding: 25px;
+    padding: 40px;
 }
 
 li {

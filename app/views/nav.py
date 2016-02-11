@@ -122,7 +122,7 @@ def editblog():
         session["title"] = form.title.data
         session["content"] = form.content.data
         print u"服务器收到数据：%s,%s,%s" % (session.get("title"), session.get("content"), current_user.uid)
-        post = Post(title=session.get("title"), body=session.get("content"), author_id=current_user.uid)
+        post = Post(title=session.get("title"), body_html=session.get("content"), author_id=current_user.uid)
         db.session.add(post)
         try:
             db.session.commit()
