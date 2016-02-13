@@ -206,7 +206,13 @@ hr {
     padding: 3px 7px;
     border: solid 1px #d7e2ee;
     margin: 0 4px 0 0;
+    transition: all .3s ease;
 
+}
+
+.pagination li a:hover {
+    background-color: #4dbfe7;
+    color: #FFF;
 }
 
 .loginbtn {

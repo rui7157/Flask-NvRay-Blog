@@ -7,10 +7,11 @@
         <ul>
             <li><a href="{{url_for('view.index')}}"><i class="icon-home"></i> 主页</a></li>
             <li><a href="{{url_for('view.blog')}}"><i class="icon-book"></i> 博客</a></li>
+            <li><a href="{{url_for('view.tool')}}"><i class="icon-inbox"></i> 工具</a></li>
             <li><a href="{{url_for('view.aboutme')}}"><i class=" icon-group"></i> 关于</a></li>
         </ul>
     </div>
-{% if current_user.is_active %}
+{% if current_user.is_authenticated %}
 <div id="loginbtn" class="loginbtn">
     <a href="#"><i class="icon-user"></i> {{current_user.uname}} <i class="icon-angle-down"></i></a>
 

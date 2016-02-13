@@ -7,7 +7,7 @@
     <form action="#" method="post" class="editpostform" id="editpostform">
         {{form.hidden_tag()}}
         {{autoform.field_generate(form,form.title)}}
-        <textarea name="content" id="content" class="ckeditor" ></textarea>
+        <textarea name="content" id="content" class="ckeditor">{% if form.content.data %}{{form.content.data}}{% endif %}</textarea>
         {{autoform.field_generate(form,form.submit)}}
     </form>
 </div>
