@@ -11,10 +11,7 @@ class Config(object):
     def init_myapp(app):
         print "running Config class"
 
-    def __new__(cls):
-        if cls.__class__ == "SinaappSae":
-            import MySQLdb
-        return super(Config, cls).__new__()
+
 
 
 class SinaappSae(Config):
@@ -30,7 +27,7 @@ class SinaappSae(Config):
     MYSQL_PORT = os.environ.get('MYSQL_PORT')
     SQLALCHEMY_DATABASE_URI = "mysql+MySQLdb://%s:%s@%s:%s/%s" % (
     os.environ.get('SAE_MYSQL_USER'), os.environ.get('SAE_MYSQL_PASS'), os.environ.get('SAE_MYSQL_HOST_M'),
-    os.environ.get('SAE_MYSQL_PORT'), os.environ.get('ACCESS_KEY'))
+    os.environ.get('SAE_MYSQL_PORT'), os.environ.get('APP_NAME'))
 
 
 class MainConfig(Config):
@@ -47,5 +44,5 @@ class MainConfig(Config):
 
 config = {
     'MainConfig': MainConfig,
-    'SinaappSae': SinaappSae
+    'hawan': SinaappSae
 }
