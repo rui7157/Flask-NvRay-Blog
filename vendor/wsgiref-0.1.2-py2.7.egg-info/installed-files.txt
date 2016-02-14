@@ -1,0 +1,17 @@
+../wsgiref/util.py
+../wsgiref/validate.py
+../wsgiref/__init__.py
+../wsgiref/simple_server.py
+../wsgiref/handlers.py
+../wsgiref/headers.py
+../wsgiref/util.pyc
+../wsgiref/validate.pyc
+../wsgiref/__init__.pyc
+../wsgiref/simple_server.pyc
+../wsgiref/handlers.pyc
+../wsgiref/headers.pyc
+./
+top_level.txt
+dependency_links.txt
+SOURCES.txt
+PKG-INFO
