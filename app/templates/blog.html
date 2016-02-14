@@ -1,5 +1,65 @@
 {% extends "menubase.html" %}
+{% import "_autoform.html" as autoform%}
 {% block content %}
-<div style="width:720px;padding:20px;font-size:2em;text-align:center;margin:100px auto;border-top:1px solid #999;"><p>
-    这是blog</p></div>
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"nvray"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0]
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+<div style="height:100px;"></div>
+
+
+<hr/>
+
+{% for post in posts %}
+
+<div class="post" id="post" style="margin: 10px; padding: 20px;">
+<h3><a href="{{url_for('view.post',id=post.id)}}" target="_blank">{{post.title}}</a></h3>
+<br/>
+<div class="post-info"><p><span><i class="icon-calendar"> {{post.timestamp}}</i></span> <span><a href="{{url_for('view.post',id=post.id)}}#ds" ><i class="icon-comments-alt"></i><span class="ds-thread-count" data-thread-key="{{post.id}}" data-count-type="comments"></span></a></span></p></div>
+
+{% if current_user.is_authenticated %}
+<div class="edit"><p><span class="post-delete"><a href="{{url_for('view.delete_post',id=post.id)}}"><i class="icon-trash"></i>删除</a></span><span class="post-edit"><a href="{{url_for('view.editblog',id=post.id)}}"><i class="icon-edit"></i>编辑</a></span></p></div>
+{% endif %}
+    <br/>
+    <p>&nbsp;&nbsp;&nbsp;<i class="icon-quote-left"></i>&nbsp; {{post.body[:300]|safe}}…… &nbsp;<i class=" icon-quote-right"></i></p>
+    <a class="post-more" href="{{url_for('view.post',id=post.id)}}" target="_blank"><span class="post-more-link">阅读全文 <i class="icon-double-angle-right"></i></span></a>
+    </div>
+    <br/>
+
+{% endfor %}
+
+<div class="pagination" id="pagination">
+
+    <ul>
+        {% if pagination.has_prev %}
+        <li><a href="{{url_for('view.blog',page=pagination.page-1 )}}">上一页</a></li>
+        {% endif %}
+
+        {% for p in pagination.iter_pages() %}
+        <li><a href="{{url_for('view.blog',page=p,l=56)}}">{{p}}</a></li>
+        {% endfor %}
+
+        {% if pagination.has_next %}
+       <li> <a href="{{url_for('view.blog',page=pagination.page+1 )}}">下一页</a></li>
+        {% endif %}
+    </ul>
+
+</div>
+<div class="fixed-btn">
+    <a class="fixed go-top" href="#"><i class="icon-arrow-up"></i></a>
+       {% if current_user.is_authenticated  %} <a class="fixed edit-post" href="{{url_for('view.editblog')}}"><i class="icon-pencil"></i></a>{% endif%}
+
+
+</div>
 {% endblock content %}
