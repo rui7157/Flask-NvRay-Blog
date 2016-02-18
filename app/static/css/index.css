@@ -27,8 +27,9 @@ a:link, a:visited {
     display: inline-block;
 }
 
-.li > ul > li > a:hover {
-    /*background-color: #e7e7e7;*/
+.slide-li {
+    position: absolute;
+    z-index: 250;
     border-top: 3px solid #999999;
 }
 
@@ -228,7 +229,7 @@ hr {
 
 .loginbtn ul {
     display: none;
-    margin-top:10px ;
+    margin-top: 10px;
 
 }
 
@@ -237,16 +238,18 @@ hr {
 }
 
 .loginbtn li {
-    padding:4px 10px;
+    padding: 4px 10px;
     background-color: #FFF;
     border-top: 1px solid #e7e7e7;
     border-bottom: 1px solid #dddddd;
     box-shadow: 2px 0 5px #BBB;
 }
+
 .loginbtn li:hover {
     background-color: #d3d3d3;
 
 }
+
 .link-me {
     margin: 10px 0;
     float: right;
@@ -271,7 +274,8 @@ div.li {
     float: left;
     height: 100%;
 }
-.fixed-btn{
+
+.fixed-btn {
     position: fixed;
     right: 2%;
     bottom: 2%;
@@ -282,27 +286,66 @@ div.li {
     z-index: 1040;
     -webkit-backface-visibility: hidden;
 }
-.fixed{
+
+.fixed {
     display: inline-block;
     width: 40px;
     height: 40px;
     text-align: center;
     transition: all .3s ease;
 }
-.fixed:hover{
+
+.fixed:hover {
     background-color: #64AFDD;
-    color:#fff;
+    color: #fff;
 }
-.edit-post{
-    border-top:1px solid #dddddd;
+
+.edit-post {
+    border-top: 1px solid #dddddd;
 }
+
 .foot-box {
     padding: 20px;
 }
 
+.a_message {
+    border-radius: 3px;
+    position: absolute;
+    display: none;
+    background: #fff;
+    border: 2px solid #4dbfe7;;
+
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    font-size: 12px;
+    line-height: 20px;
+    margin: 3px;
+}
+
+.a_message .arrow {
+    border-width: 8px;
+    font-size: 0;
+    line-height: 0;
+    border-style: solid dashed dashed;
+    position: absolute;
+    bottom: -16px;
+    z-index: 20;
+
+}
+
+.a_message .out {
+    border-color: #4dbfe7 transparent transparent;
+}
+
+.a_message .in {
+    bottom: -14px;
+    border-color: #FFF transparent transparent;
+}
+
 /*base模板样式*/
 .navbar {
-    z-index: 1000;
+    z-index: 200;
     width: 100%;
     height: 50px;
     position: fixed;
