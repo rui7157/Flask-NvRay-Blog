@@ -3,7 +3,7 @@
 
 <a href="http://hawan.sinaapp.com/">NvRay Blog</a>
 
-###项目所用到的模块
+### 项目所用到的模块
 
 * argparse (1.2.1)
 * blinker (1.4)
@@ -25,5 +25,5 @@
 * wsgiref (0.1.2)
 * WTForms (2.1)
 
-###网站预览
+### 网站预览
 ![flask](http://769007157.host3v.net/nvrayflask.png)
